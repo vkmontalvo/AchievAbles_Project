@@ -1,0 +1,111 @@
+/* Global Styles */
+.logo {
+    float: left;
+    margin: -20px;
+}
+
+/* Main Page */
+.main {
+     background-image: url("images/dreams.jpg");
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     background-size: cover;
+}
+
+.signup {
+    float: right;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color:#2F80B7;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    color: white;
+    font-size: 16px;
+    padding: 20px 25px;
+    
+}
+
+.signup-welcome {
+    font-family: 'Pacifico', cursive;
+    font-size: 42px;
+    color: #2F80B7;
+    text-align: center;
+    
+}
+
+.info {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    text-align: center;
+    
+}
+
+.submitbtn {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color:#2F80B7;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    color: white;
+    font-size: 16px;
+    padding: 15px 25px;
+}
+
+.modalcstm {
+    margin-top: 9%;
+}
+
+.small-info {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    text-align: center;
+}
+
+.error {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    color: #e74c3c;
+}
+
+.message-box {
+    height: 150px;
+}
+
+.login {
+    float: right;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color:white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    color: #2F80B7;
+    font-size: 16px;
+    padding: 20px 30px;
+    margin-right: -15px;
+    
+}
+
+.links {
+    float: left;
+    display: inline-block;
+    color: #2F80B7;
+    font-family: 'Monserrat', sans-serif;
+    background-color: transparent;
+    font-weight: 900;
+    font-size: 16px;
+    margin-left: 20%;
+    text-decoration: none;
+    border: none;
+    text-align: center;
+    padding: 20px 30px;
+    
+}
+
