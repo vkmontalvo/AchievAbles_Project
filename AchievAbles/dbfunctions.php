@@ -135,16 +135,16 @@ function checkUsername($user) {
     return $results;
 }
 
-function addUser($user, $email, $pwd, $group){
+function addUser($email, $user, $sha, $group){
     // SQL variables
     $db = dbconnect();
-    $stmt = $db->prepare("INSERT INTO ausers SET email = :email, username = :user, password = :pwd, user_group = :group");
+    $stmt = $db->prepare("INSERT INTO ausers (email, username, password, user_group) VALUES (:email, :user, :sha, :group)");
 
     // Binds the data
     $binds = array(
         ":email" => $email,
         ":user" => $user,
-        ":pwd" => $pwd,
+        ":sha" => $sha,
         ":group" => $group
     );
 
@@ -220,19 +220,13 @@ function userImage($user_id, $image) {
 // Login/Logout Functions
 //===========================================================
 
-function loginValidate($user, $pwd){
+function loginValidate($user, $sha){
     // SQL variables
     $db = dbconnect();
-    $stmt = $db->prepare("SELECT * FROM ausers WHERE username = :user AND password = :pwd");
-    
-    // Binds
-    $binds = array(
-        ":user" => $user,
-        ":pwd" => $pwd
-    );
-    
-    // If the statement executes according to the binds and the row count if over 0, display success. Else, display error
-    if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+    $stmt = $db->prepare("SELECT * FROM ausers WHERE username = '" . $user . "' AND password = '" . $sha . "'");
+    $stmt->execute();
+    // If the statement executes according to the binds and the row count is 1, display success. Else, display error
+    if ($stmt->rowCount() === 1) {
         $valid = true;
     } else {
         $valid = false;
@@ -241,12 +235,12 @@ function loginValidate($user, $pwd){
     return $valid;
 }
 
-function login ($user, $pwd){
+function login ($user, $sha){
     // SQL variables
     $db = dbconnect();
     $user_id_array = findUserId($user);
     $user_id = $user_id_array['user_id'];
-    $success = loginValidate($user, $pwd);
+    $success = loginValidate($user, $sha);
     
     if ($success === true) {
         $type = "Successful";
@@ -271,19 +265,16 @@ function login ($user, $pwd){
 function groupValidate($user){
     // SQL variables
     $db = dbconnect();
-    $stmt = $db->prepare("SELECT user_group FROM ausers WHERE username = :user");
-    
-    // Binds
-    $binds = array(
-        ":user" => $user
-    );
+    $stmt = $db->prepare("SELECT * FROM ausers WHERE username = '" . $user . "'");
     
     // If the statement executes and there are over 0 rows, fetch the data
-    if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+    if ($stmt->execute() && $stmt->rowCount() === 1) {
         $results = $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
-    if ($results['user_group'] === 'Admin')
+    $admin = $results ['user_group'];
+    
+    if ($admin === 'Admin')
     {
         $valid = true;
     }
@@ -293,6 +284,43 @@ function groupValidate($user){
     }
     
     return $valid;
+}
+
+function checkEmail($email) {
+    $db = dbconnect();
+    $stmt = $db->prepare("SELECT * FROM ausers WHERE email = :email");
+    $binds = array(
+        ":email" => $email
+            
+    );
+ 
+    // If the statement executes and there are over 0 rows, return true
+    if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+        $results = true;
+    }
+    else {
+        $results = false;
+    }
+
+    return $results;
+}
+
+
+
+function checkUserPass($email) {
+    $db = dbconnect();
+    $stmt = $db->prepare("SELECT * FROM ausers WHERE email = :email");
+    $binds = array(
+        ":email" => $email
+            
+    );
+ 
+    // If the statement executes and there are over 0 rows, return results
+    if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    return $results;
 }
 
 //===========================================================

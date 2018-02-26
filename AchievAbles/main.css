@@ -67,6 +67,15 @@
     text-align: center;
 }
 
+.forgot {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    text-align: center;
+    border: none;
+    text-decoration: none;
+    background-color: transparent;
+}
+
 .error {
     font-family: 'Montserrat', sans-serif;
     font-size: 10px;
