@@ -23,8 +23,7 @@ session_start();
         <nav class="navbar navbar-inverse navbar-fixed-bottom">
             <div class="container-fluid">
                 <a href='index.php' class='links'>Home</a>
-                <button class="links" id="contactUs">Contact Us</button>
-                <a href='about.php' class="links">About Us</a>
+                <button class="links" id="contactUs" onclick="contactUs()">Contact Us</button>
             </div>
 
         </nav>
@@ -69,8 +68,7 @@ session_start();
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <p class="small-info">By signing up, you agree to our<br>
-                                <a href="#">Terms & Conditions</a></p>
+                            
                         </div>
                     </div>
 
@@ -92,115 +90,22 @@ session_start();
                             <form role="form" id="loginForm" method="post" action="login.php">
                                 <span class="error" id="login-error"></span>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="usrname2" placeholder="Username">
+                                    <input type="text" class="form-control" name="usrname2" id="usrname2" placeholder="Username">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" name="passwrd2" placeholder="Password">
+                                    <input type="password" class="form-control" name="passwrd2" id="passwrd2" onkeyup="checkCreds()" placeholder="Password">
                                 </div>
                                 <button type="submit" class="submitbtn" name='login-submit'>Login</button>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button class="forgot" id="forgot">Forgot Username or Password?</button>
+                            <button class="forgot" id="forgot" onclick="forgotPassword()">Forgot Username or Password?</button>
                         </div>
                     </div>
 
                 </div>
             </div>
             
-             <!-- Forgot Login Modal -->
-            <div class="modal fade modalcstm" id="forgotModal" role="dialog">
-                <div class="modal-dialog">
-
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="signup-welcome">We Can Help</h4>
-                            <p class="info">Forgot your login info?<br>
-                                Not a problem! Enter the email address for your account and we'll email the details.</p>
-                        </div>
-                        <div class="modal-body">
-                            <form role="form" id="forgotForm" method="post" action="forgot.php">
-                                <input type="hidden" name="formType" value="1">
-                                <span class="error" id="forgot-error"></span>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" onkeyup="checkEmail()" id="forgot-email" name="forgot-email" placeholder="Email">
-                                </div>
-                                <button type="submit" class="submitbtn" name='forgot-submit' id="forgot-submit">Submit</button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <p class="small-info">Sit tight. An email will be sent to you shortly.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Contact Modal -->
-            <div class="modal fade modalcstm" id="contactModal" role="dialog">
-                <div class="modal-dialog">
-
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="signup-welcome">We're Here to Help</h4>
-                            <p class="info">Having trouble or want to know more?<br>
-                                Send us a message and we'll contact you asap.</p>
-                        </div>
-                        <div class="modal-body">
-                            <form role="form" action='index.php' method='post'>
-                                <input type="hidden" name="formType" value="2">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="emailadd" placeholder="Your Email">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="subject" placeholder="Subject">
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control message-box" name="message" placeholder="Message"></textarea>
-                                </div>
-                                <button type="submit" class="submitbtn" name='message-submit'>Send</button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <p class="small-info">Please allow up to 48 hrs for a response.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div><?php
-        include './dbfunctions.php';
-        if (isPost()) {
-            $form = filter_input(INPUT_POST, 'formType');
-            
-            //================================================================
-                // Forgot Form
-                //================================================================
-            if ($form === 1){
-                $email = filter_input(INPUT_POST, 'forgot-email');
-                $tmp = checkUserPass($email);
-                $subject = "AchievAbles Account Recovery";
-                $headers = "This is an automated message. Please do not reply.";
-                $message = "Hello there!\nYou have requested your account details to be sent to you. If this was not you,\n"
-                        . "please disregard. You have the following account under this email address:/n/n Username: " . $account['username']. "\nPassword: " . $account['password'];
-                      
-                mail($email,$subject,$message,$headers);
-            }
-            
-                //================================================================
-                // Contact Form
-                //================================================================
-
-                $email = filter_input(INPUT_POST, 'emailadd');
-                $subject = filter_input(INPUT_POST, 'subject');
-                $msg = wordwrap(filter_input(INPUT_POST, 'message'), 70);
-
-
-                mail("valeriekmontalvo@gmail.com", "New AchievAbles Message: " . $subject, $msg, "From: " . $email);
-            }
-        
-        ?>
+        </div>
     </body>
 </html>
